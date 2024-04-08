@@ -16,6 +16,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PlaylistRepository extends ServiceEntityRepository
 {
+    private const PFORMATIONS = 'p.formations';
+    private const PNAME = 'p.name';
+
+
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Playlist::class);
@@ -47,9 +53,9 @@ class PlaylistRepository extends ServiceEntityRepository
      */
     public function findAllOrderByName($ordre): array{
         return $this->createQueryBuilder('p')
-                ->leftjoin('p.formations', 'f')
+                ->leftjoin(self::PFORMATIONS, 'f')
                 ->groupBy('p.id')
-                ->orderBy('p.name', $ordre)
+                ->orderBy(self::PNAME, $ordre)
                 ->getQuery()
                 ->getResult();       
     } 
@@ -68,21 +74,21 @@ class PlaylistRepository extends ServiceEntityRepository
         }    
         if($table==""){      
             return $this->createQueryBuilder('p')
-                    ->leftjoin('p.formations', 'f')
+                    ->leftjoin(self::PFORMATIONS, 'f')
                     ->where('p.'.$champ.' LIKE :valeur')
                     ->setParameter('valeur', '%'.$valeur.'%')
                     ->groupBy('p.id')
-                    ->orderBy('p.name', 'ASC')
+                    ->orderBy(self::PNAME, 'ASC')
                     ->getQuery()
                     ->getResult();              
         }else{   
             return $this->createQueryBuilder('p')
-                    ->leftjoin('p.formations', 'f')
+                    ->leftjoin(self::PFORMATIONS, 'f')
                     ->leftjoin('f.categories', 'c')
                     ->where('c.'.$champ.' LIKE :valeur')
                     ->setParameter('valeur', '%'.$valeur.'%')
                     ->groupBy('p.id')
-                    ->orderBy('p.name', 'ASC')
+                    ->orderBy(self::PNAME, 'ASC')
                     ->getQuery()
                     ->getResult();              
             

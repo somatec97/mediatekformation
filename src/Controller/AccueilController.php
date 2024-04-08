@@ -17,7 +17,12 @@ class AccueilController extends AbstractController{
      * @var FormationRepository
      */
     private $repository;
-    
+    /**
+     * le chemin vers la page d'accueil
+     */
+    private const PAGEACCUEIL = "pages/accueil.html.twig";
+
+
     /**
      * 
      * @param FormationRepository $repository
@@ -32,7 +37,7 @@ class AccueilController extends AbstractController{
      */
     public function index(): Response{
         $formations = $this->repository->findAllLasted(2);
-        return $this->render("pages/accueil.html.twig", [
+        return $this->render(self::PAGEACCUEIL, [
             'formations' => $formations
         ]); 
     }
