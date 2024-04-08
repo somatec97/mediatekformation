@@ -65,14 +65,12 @@ class PlaylistRepository extends ServiceEntityRepository
      * ou tous les enregistrements si la valeur est vide
      * @param type $champ
      * @param type $valeur
-     * @param type $table si $champ dans une autre table
      * @return Playlist[]
      */
-    public function findByContainValue($champ, $valeur, $table=""): array{
+    public function findByContainValue($champ, $valeur): array{
         if($valeur==""){
             return $this->findAllOrderByName('ASC');
         }    
-        if($table==""){      
             return $this->createQueryBuilder('p')
                     ->leftjoin(self::PFORMATIONS, 'f')
                     ->where('p.'.$champ.' LIKE :valeur')
@@ -81,8 +79,21 @@ class PlaylistRepository extends ServiceEntityRepository
                     ->orderBy(self::PNAME, 'ASC')
                     ->getQuery()
                     ->getResult();              
-        }else{   
-            return $this->createQueryBuilder('p')
+         
+    }
+    /**
+     * Enregistrements dont un champ contient une valeur
+     * ou tous les enregistrements si la valeur est vide
+     * @param type $champ
+     * @param type $valeur
+     * @param type $table si $champ dans une autre table
+     * @return Playlist[]
+     */
+    public function findByContainValueTable($champ, $valeur, $table=""):array {
+        if($valeur==""){
+            return $this->findAllOrderByName('ASC');
+        }
+         return $this->createQueryBuilder('p')
                     ->leftjoin(self::PFORMATIONS, 'f')
                     ->leftjoin('f.categories', 'c')
                     ->where('c.'.$champ.' LIKE :valeur')
@@ -90,10 +101,10 @@ class PlaylistRepository extends ServiceEntityRepository
                     ->groupBy('p.id')
                     ->orderBy(self::PNAME, 'ASC')
                     ->getQuery()
-                    ->getResult();              
-            
-        }           
-    }    
+                    ->getResult(); 
+        
+    }
+    
 
 
     
