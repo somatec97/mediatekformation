@@ -1,0 +1,42 @@
+
+
+{% block body %}
+    <h2>Detail formation</h2>
+    {{ form_start(formformation) }}
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col-auto">
+                        {{ form_row(formformation.title)}}
+                    </div>
+                   
+                    <div class="col">
+                        {{ form_row(formformation.description) }}
+                    </div> 
+                    
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(formformation.playlist) }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        {{ form_row(formformation.categories) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formformation.publishedAt) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formformation.videoId) }}
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(formformation.submit) }}
+                        </div>
+                    </div>
+                 
+            </div>
+        </div>
+                
+                    
+    {{ form_end(formformation) }}
+{% endblock %}  
