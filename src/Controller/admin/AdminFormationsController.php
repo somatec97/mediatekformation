@@ -97,5 +97,47 @@ class AdminFormationsController extends AbstractController {
         ]);
         
     }
+    /**
+     * @Route("/admin/formations/tri/{champ}/{ordre}/{table}", name="admin.formations.sort")
+     * @param type $champ
+     * @param type $ordre
+     * @return Response
+     */
+    public function sort($champ, $ordre, $table=""): Response{
+        if($table == ""){
+            $formations = $this->formationRepository->findAllOrderBy($champ, $ordre);
+            
+        }else{
+            $formations = $this->formationRepository->findAllOrderByTable($champ, $ordre, $table);
+        } 
+        $categories = $this->categorieRepository->findAll();
+        return $this->render("admin/admin.formations.html.twig", [
+            'formations' => $formations,
+            'categories' => $categories
+        ]);
+    }     
+    
+    /**
+     * @Route("/admin/formations/recherche/{champ}/{table}", name="admin.formations.findallcontain")
+     * @param type $champ
+     * @param Request $request
+     * @return Response
+     */
+    public function findAllContain($champ, Request $request, $table=""): Response{
+        $valeur = $request->get("recherche");
+        if($table ==""){
+            $formations = $this->formationRepository->findByContainValue($champ, $valeur);
+        }else{
+            $formations = $this->formationRepository->findByContainValueTable($champ, $valeur, $table);
+
+        }
+        $categories = $this->categorieRepository->findAll();
+        return $this->render("admin/admin.formations.html.twig", [
+            'formations' => $formations,
+            'categories' => $categories,
+            'valeur' => $valeur,
+            'table' => $table
+        ]);
+    }  
     
 }

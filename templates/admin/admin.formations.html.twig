@@ -1,5 +1,6 @@
 {% extends "baseadmin.html.twig" %}
 {% block body %}
+    <h5>Gérer les formations</h5>
     <p class="text-end">
         <a href="{{ path('admin.formation.ajout') }}" class="btn btn-primary">
             Ajouter une nouvelle formation
@@ -11,15 +12,48 @@
             <tr>
                 <th class="text-left align-top" scope="col">
                     Formation<br/>
+                    <a href="{{ path('admin.formations.sort', {champ:'title', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                    <a href="{{ path('admin.formations.sort', {champ:'title', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin.formations.findallcontain', {champ:'title'}) }}">
+                        <div class="form-group mr-1 mb-2">
+                            <input type="text" class="sm" name="recherche" 
+                                   value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('filtre_title') }}">
+                            <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
+                        </div>
+                    </form> 
                 </th>
                  <th class="text-left align-top" scope="col">
                     Playlist<br/>
+                    <a href="{{ path('admin.formations.sort', {table:'playlist', champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                    <a href="{{ path('admin.formations.sort', {table:'playlist', champ:'name', ordre:'DESC'})}}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin.formations.findallcontain', {champ:'name', table:'playlist'}) }}">
+                            <div class="form-group mr-1 mb-2">
+                                <input type="text" class="sm" name="recherche" 
+                                   value="{% if valeur|default and table|default and table=='playlist' %}{{ valeur }}{% endif %}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('filtre_name') }}">
+                                <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
+                            </div>
+                        </form>
                 </th>
                  <th class="text-left align-top" scope="col">
                     Catégorie<br/>
+                     <form class="form-inline mt-1" method="POST" action="{{ path('admin.formations.findallcontain', {champ:'id', table:'categories'}) }}">
+                        <select class="form-select form-select-sm" name="recherche" id="recherche" onchange="this.form.submit();">
+                            <option value=""></option>
+                            {% for categorie in categories %}
+                                <option value="{{ categorie.id }}"{{ (value|default == categorie.id)? 'selected' : '' }}>
+                                    {{ categorie.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form> 
                 </th>
                  <th class="text-left align-top" scope="col">
                     Date de publication<br/>
+                    <a href="{{ path('admin.formations.sort', {champ:'publishedAt', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                    <a href="{{ path('admin.formations.sort', {champ:'publishedAt', ordre:'DESC'})}}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                    
                 </th>
                 <th class="text-left align-top" scope="col">
                     Détails<br/>
