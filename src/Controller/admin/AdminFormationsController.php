@@ -50,7 +50,7 @@ class AdminFormationsController extends AbstractController {
         ]);
     }
     /**
-     * @Route("/admin/suppr/{id}", name="admin.formation.suppr")
+     * @Route("/admin/suppr.formation/{id}", name="admin.formation.suppr")
      * @param Formation $formation
      * @return Response
      */

@@ -4,12 +4,11 @@
 
 namespace App\Controller\admin;
 
-
+use App\Entity\Playlist;
+use App\Form\PlaylistType;
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
 use App\Repository\PlaylistRepository;
-use App\Entity\Playlist;
-use App\Form\PlaylistType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,7 +60,7 @@ class AdminPlaylistsController extends AbstractController {
         ]);
     }
      /**
-     * @Route("/admin/suppr/{id}", name="admin.playlist.suppr")
+     * @Route("/admin/suppr.playlist/{id}", name="admin.playlist.suppr")
      * @param Playlist $playlist
      * @return Response
      */
@@ -71,7 +70,7 @@ class AdminPlaylistsController extends AbstractController {
         
     }
     /**
-     * @Route("/admin/edit/{id}", name="admin.playlist.edit")
+     * @Route("/admin/edit.playlist/{id}", name="admin.playlist.edit")
      * @param Playlist $playlist
      * @param Request $request
      * @return Response
@@ -90,7 +89,7 @@ class AdminPlaylistsController extends AbstractController {
         
     }
     /**
-     * @Route("/admin/ajout", name="admin.playlist.ajout")
+     * @Route("/admin/ajout.playlist", name="admin.playlist.ajout")
      * @param Request $request
      * @return Response
      */
