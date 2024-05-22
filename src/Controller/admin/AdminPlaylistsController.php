@@ -134,17 +134,16 @@ class AdminPlaylistsController extends AbstractController {
      * @return Response
      */
     public function findAllContain($champ, Request $request, $table=""): Response{
-        $valeur = $request->get("recherche");
-        if($table ==""){
-            $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur);
-        }else{
+         $valeur = $request->get("recherche");
+        if($table !=""){
             $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur, $table);
-
+        }else{
+            $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur);
         }
         $categories = $this->categorieRepository->findAll();
         return $this->render("admin/admin.playlists.html.twig", [
             'playlists' => $playlists,
-            'categories' => $categories,
+            'categories' => $categories,            
             'valeur' => $valeur,
             'table' => $table
         ]);

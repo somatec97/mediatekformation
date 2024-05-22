@@ -103,20 +103,26 @@ class PlaylistRepository extends ServiceEntityRepository
      * @return Playlist[]
      */
     public function findByContainValueTable($champ, $valeur, $table=""):array {
-        if($valeur==""){
-            return $this->findAllOrderByName('ASC');
-        }
-         return $this->createQueryBuilder('p')
-                    ->leftjoin(self::PFORMATIONS, 'f')
-                    ->leftjoin('f.categories', 'c')
-                    ->where('c.'.$champ.' LIKE :valeur')
-                    ->setParameter('valeur', '%'.$valeur.'%')
-                    ->groupBy('p.id')
-                    ->orderBy(self::PNAME, 'ASC')
-                    ->getQuery()
-                    ->getResult(); 
-        
+    if($valeur==""){
+        return $this->findAllOrderByName('ASC');
     }
+    $query = $this->createQueryBuilder('p')
+                ->leftjoin(self::PFORMATIONS, 'f');
+                
+    if($table == "categories") {
+        $query->leftjoin('f.categories', 'c')
+              ->where('c.'.$champ.' LIKE :valeur');
+    } else {
+        $query->where('p.'.$champ.' LIKE :valeur');
+    }
+    
+    return $query->setParameter('valeur', '%'.$valeur.'%')
+                 ->groupBy('p.id')
+                 ->orderBy(self::PNAME, 'ASC')
+                 ->getQuery()
+                 ->getResult(); 
+}
+
     
 
 

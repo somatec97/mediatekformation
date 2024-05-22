@@ -52,6 +52,7 @@
         </thead>
     
     <tbody>
+        {% if playlists is not empty %}
         {% for k in 0.. playlists|length-1 %}
             <tr class="align-middle">
                 <td>
@@ -86,6 +87,7 @@
                 </td>
       
         {% endfor %}
+        {% endif %}
     </tbody>
     </table>
 
