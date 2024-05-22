@@ -13,6 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  * @author BEN BAHA
  */
 class CategorieRepositoryTest extends KernelTestCase{
+    /**
+     * 
+     * @return FormationRepository
+     */
     public function recupRepository(): CategorieRepository{
         self::bootKernel();
         $repository = self::getContainer()->get(CategorieRepository::class);
