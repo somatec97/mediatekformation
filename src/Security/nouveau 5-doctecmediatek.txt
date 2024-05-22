@@ -1,0 +1,9 @@
+:\Windows\System32>"C:\wamp\bin\php\php8.1.28\php.exe" "C:\wamp\bin\php\php8.1.28\ext\phpDocumentor.phar" "run" "--ansi" "--directory" "C:/wamp/www/mediatekformation/src" "--target" "C:/wamp/www/mediatekformation_doc" "--title" "mediatekformation"
+phpDocumentor v3.4.3
+
+Parsing files
+ 19/19 [============================] 100%
+Applying transformations (can take a while)
+
+All done in 1 seconds!
+cmd doctechniq
